@@ -19,6 +19,7 @@ printParam('1', 1);
 // 参数默认值 TypeScript 会将添加了默认值的参数识别为可选参数
 // 此时就不受「可选参数必须接在必需参数后面」的限制了：
 function buildName(age, name) {
+    console.log('age',age === void 0);
     if (age === void 0) { age = 18; }
     return [name, age];
 }

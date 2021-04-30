@@ -9,10 +9,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -21,7 +23,7 @@ var __extends = (this && this.__extends) || (function () {
 // 当我们想要调用swim方法且不确定类型时, 将类型断言成Fish 那么就不会报错
 // 需要注意的是，类型断言只能够「欺骗」TypeScript 编译器，无法避免运行时的错误
 function swim(animal) {
-    // return animal.swim() //error TS2339: Property 'swim' does not exist on type 'Cat | Fish'
+    // return animal.swim() // error TS2339: Property 'swim' does not exist on type 'Cat | Fish'
     return animal.swim();
 }
 var Hanly = {
@@ -87,7 +89,16 @@ var Teacher = /** @class */ (function (_super) {
 var tt = new Teacher();
 tt.name = 'zy';
 // 当我们引用一个在此类型上不存在的属性或方法时，就会报错
-var foo = 1;
+function fn(val) {
+    if (val.length) {
+        return val.length;
+    }
+    else {
+        return val.toString().length;
+    }
+}
+console.log(fn(1));
+console.log(fn("1"));
 // 下面写法与Book继承与Paper是等价的
 // interface Book{
 //   color:string;
